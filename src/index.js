@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import TicketsLogic from './components/TicketsLogic';
+import './index.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const app = <TicketsLogic><App /></TicketsLogic>
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(app, document.getElementById('root'));
