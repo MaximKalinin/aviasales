@@ -6,7 +6,9 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import Filter from './components/Filter/Filter';
 import Switcher from './components/Switcher/Switcher';
 import Ticket from './components/Ticket/Ticket';
-import Spinner from './components/Spinner/Spinner';
+import Logo from './components/Logo/Logo';
+import Loader from './components/Loader/Loader';
+
 import TicketsContext from './context/tickets';
 
 const AppEl = styled.main`
@@ -24,16 +26,29 @@ const AppEl = styled.main`
     max-width: 755px;
     height: calc(100vh - 160px);
     width: 100%;
-    div.main {
-      flex: 1;
-      display: flex;
+  }
+  div.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-self: normal;
+    overflow-x: hidden;
+  }
+  div.tickets {
+    overflow-y: scroll;
+    height: calc(100vh - 160px - 49px);
+    flex: 1;
+  }
+  @media (max-width: 799px) {
+    height: auto;
+    div.content {
       flex-direction: column;
-      align-self: normal;
-      div.tickets {
-        overflow-y: scroll;
-        height: calc(100vh - 160px - 49px);
-        flex: 1;
-      }
+      height: 100vh;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+    div.tickets {
+      height: 100vh;
     }
   }
 `;
@@ -57,14 +72,15 @@ class App extends React.Component {
   };
 
   render () {
-    const { tickets, ticketsUpdated } = this.context;
+    const { tickets, ticketsUpdated, loading } = this.context;
     return (
       <AppEl>
-        <Spinner />
+        <Logo />
         <div className="content">
           <Filter />
           <div className="main">
             <Switcher />
+            { loading && <Loader /> }
             <div className="tickets">
               <AutoSizer className={ ticketsUpdated.toString() }>
                 { ({ width, height }) => (

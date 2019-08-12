@@ -65,10 +65,13 @@ const FilterEl = styled.div`
     visibility: hidden;
     display: none;
   }
+  @media (max-width: 799px) {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 `;
 
 const Filter = ({ filterStops, switchFilterStops }) => {
-  // const [transfer, setTransfer] = React.useState({ all: false, none: false, one: false, two: false, three: false });
   return (
     <FilterEl>
       <h3>Количество пересадок</h3>
@@ -114,13 +117,6 @@ const getLabelByKey = (key) => {
       return '3 пересадки';
     default: return;
   }
-};
-
-const switchTransfer = (transfer, key, setTransfer) => {
-  const newTransfer = { ...transfer };
-  newTransfer[key] = !newTransfer[key];
-  setTransfer(newTransfer);
-  console.log(newTransfer);
 };
 
 export default FilterWithContext;

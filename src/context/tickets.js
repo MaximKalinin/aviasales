@@ -7,5 +7,6 @@ export default React.createContext({
   switchFilterStops: () => { },
   ticketsUpdated: null,
   sortBy: null,
-  setSort: () => { }
+  setSort: () => { },
+  loading: null
 });

@@ -15,7 +15,7 @@ class TicketsLogic extends React.Component {
     updateTickets: false,
     ticketsUpdated: false,
     sortBy: 'cheap',
-    stopLoading: false
+    loading: true
   };
 
   componentDidUpdate (prevProps, prevState) {
@@ -54,9 +54,8 @@ class TicketsLogic extends React.Component {
   }
 
   getTickets = async () => {
-    const { updateTickets, stopLoading } = this.state;
-    if (stopLoading) {
-      console.log('stop loading');
+    const { updateTickets, loading } = this.state;
+    if (!loading) {
       return;
     }
     try {
@@ -70,9 +69,8 @@ class TicketsLogic extends React.Component {
       const ticketsObj = await ticketsRes.json();
       // stop = ticketsObj.stop;
       const newTickets = [...this.state.tickets, ...ticketsObj.tickets];
-      this.setState({ tickets: newTickets, updateTickets: !updateTickets, stopLoading: ticketsObj.stop });
+      this.setState({ tickets: newTickets, updateTickets: !updateTickets, loading: !ticketsObj.stop });
       // }
-      console.log({ stopLoading: ticketsObj.stop });
     } catch (e) {
       console.log(e);
     }
@@ -107,7 +105,7 @@ class TicketsLogic extends React.Component {
   }
 
   render () {
-    const { filteredTickets, sortBy, filterStops, ticketsUpdated } = this.state;
+    const { filteredTickets, sortBy, filterStops, ticketsUpdated, loading } = this.state;
     const { children } = this.props;
     return (
       <TicketsContext.Provider
@@ -118,7 +116,8 @@ class TicketsLogic extends React.Component {
           switchFilterStops: this.switchFilterStops,
           sortBy,
           setSort: this.setSort,
-          ticketsUpdated
+          ticketsUpdated,
+          loading
         } }
       >
         { children }
